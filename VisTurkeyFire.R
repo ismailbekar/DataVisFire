@@ -1,4 +1,4 @@
-setwd("~/Desktop/VisTurkeyFire")
+setwd("~/GitHub/DataVisFire/")
 library(raster)
 library(dplyr)
 library(ggplot2)
