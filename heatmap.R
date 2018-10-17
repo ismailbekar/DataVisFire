@@ -1,11 +1,17 @@
+library(leaflet)
+library(leaflet.extras)
+library(tidyverse)
 
-leaflet(df_Turkey) %>%
+load("~/Github/DataVisFire/fire_coord.RData")
+fire_coord <- as.tibble(coordinates(fire))
+
+leaflet(fire_coord) %>%
      addProviderTiles("Esri.WorldImagery") %>%
-     addMarkers(~ long, ~ lat)  
+     addCircles(~ Lon, ~ Lat)
 
-leaflet(fire) %>% 
+leaflet(fire_coord) %>% 
      addProviderTiles("Esri.WorldImagery") %>%
      addHeatmap(lng= ~Lon, lat= ~Lat,
-                blur= 5, max= 0.8, radius= 8)
+                blur= 2, max= 1.5, radius= 3)
 
 
