@@ -1,9 +1,9 @@
 library(leaflet)
 library(leaflet.extras)
 library(tidyverse)
+library(raster)
 
 load("~/Github/DataVisFire/fire_coord.RData")
-fire_coord <- as.tibble(coordinates(fire))
 
 leaflet(fire_coord) %>%
      addProviderTiles("Esri.WorldImagery") %>%
