@@ -1,33 +1,41 @@
 setwd("~/GitHub/DataVisFire/")
 library(raster)
 library(dplyr)
-library(ggplot2)
 library(rgdal)
 
 fire <- read.csv("Data/fire_data.csv")
-fire <- fire %>% dplyr::select(Il,Ilce,Day, Month, Year, AnaNeden, TaliNeden, Lon, Lat)
+#### Fire file edit ####
+fire <- fire %>% 
+     select(Il,Ilce,Day, Month, Year, AnaNeden, TaliNeden, Lon, Lat)
 
 coordinates(fire) <- ~Lon + Lat
 class(fire)
-fire
 
 Turkey_il <- readOGR("Data/Shapefile/TUR_adm1.shp")
-Turkey_il$NAME_1 <- c("Canakkale", "Cankiri", "Corum", "Adana", "Adiyaman", "Afyon", "Agri",
-                      "Aksaray", "Amasya", "Ankara", "Antalya", "Ardahan", "Artvin", "Aydin", 
-                      "Balikesir", "Bartin", "Batman", "Bayburt", "Bilecik", "Bingol",
-                      "Bitlis", "Bolu", "Burdur", "Bursa", "Duzce", "Denizli", "Diyarbakir", 
+Turkey_il$NAME_1 <- c("Canakkale", "Cankiri", "Corum", "Adana", "Adiyaman", 
+                      "Afyon", "Agri", "Aksaray", "Amasya", "Ankara", "Antalya",
+                      "Ardahan", "Artvin", "Aydin","Balikesir", "Bartin", 
+                      "Batman", "Bayburt", "Bilecik", "Bingol","Bitlis", "Bolu",
+                      "Burdur", "Bursa", "Duzce", "Denizli", "Diyarbakir", 
                       "Edirne", "Elazig", "Erzincan", "Erzurum", "Eskisehir", 
                       "Gumushane", "Gaziantep", "Giresun", "Hakkari", "Hatay", 
                       "Igdir", "Isparta", "Istanbul", "Izmir", "K. Maras", 
-                      "Kutahya", "Karabuk", "Karaman", "Kars", "Kastamonu", "Kayseri", 
-                      "Kilis", "Kinkkale", "Kirklareli", "Kirsehir", "Kocaeli", "Konya", "Malatya", 
-                      "Manisa", "Mardin", "Mersin", "Mugla", "Mus","Nevsehir", "Nigde", "Ordu", 
-                      "Osmaniye", "Rize", "Sakarya", "Samsun", "Sanliurfa", "Siirt", "Sinop", 
-                      "Sirnak", "Sivas", "Tekirdag", "Tokat", "Trabzon", "Tunceli", "Usak", 
-                      "Van","Yalova", "Yozgat", "Zonguldak")
+                      "Kutahya", "Karabuk", "Karaman", "Kars", "Kastamonu",
+                      "Kayseri","Kilis", "Kinkkale", "Kirklareli", "Kirsehir",
+                      "Kocaeli", "Konya", "Malatya","Manisa", "Mardin", 
+                      "Mersin", "Mugla", "Mus","Nevsehir", "Nigde", "Ordu", 
+                      "Osmaniye", "Rize", "Sakarya", "Samsun", "Sanliurfa", 
+                      "Siirt", "Sinop","Sirnak", "Sivas", "Tekirdag", "Tokat", 
+                      "Trabzon", "Tunceli", "Usak","Van","Yalova", "Yozgat", 
+                      "Zonguldak")
+
 
 Turkey_il <- spTransform(Turkey_il, "+init=epsg:4326")
 proj4string(fire) <- CRS("+init=epsg:4326")
+
+
+# load previous code results ----------------------------------------------
+load("~/GitHub/DataVisFire/VisTurkeyFire.RData")
 
 crs(Turkey_il)
 crs(fire)
